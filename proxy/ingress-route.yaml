@@ -1,0 +1,32 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: teleport-proxy
+  namespace: vassyutovich
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`teleport-proxy-ssh-vassyutovich.mindbox.ru`)
+      priority: 40
+      services:
+        - name: teleport-proxy
+          port: 3023
+    - kind: Rule
+      match: Host(`teleport-proxy-webssh-vassyutovich.mindbox.ru`)
+      priority: 40
+      services:
+        - name: teleport-proxy
+          port: 3080
+    - kind: Rule
+      match: Host(`teleport-proxy-tunnel-vassyutovich.mindbox.ru`)
+      priority: 40
+      services:
+        - name: teleport-proxy
+          port: 3024
+  tls:
+    options:
+      name: bgrade-tls-options
+      namespace: traefik
+    secretName: kubernetes-mindbox-tls-cert

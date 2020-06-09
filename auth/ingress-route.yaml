@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: teleport-auth
+  namespace: vassyutovich
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`teleport-auth-vassyutovich.mindbox.ru`)
+      priority: 40
+      services:
+        - name: teleport-auth
+          port: 3025
+  tls:
+    options:
+      name: bgrade-tls-options
+      namespace: traefik
+    secretName: kubernetes-mindbox-tls-cert

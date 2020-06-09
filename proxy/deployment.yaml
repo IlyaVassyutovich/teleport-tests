@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teleport-proxy
+  namespace: vassyutovich
+spec:
+  selector:
+    matchLabels:
+      app: teleport-proxy
+  template:
+    metadata:
+      labels:
+        app: teleport-proxy
+    spec:
+      containers:
+      - name: teleport-proxy
+        image: quay.io/gravitational/teleport:4.2.9
+        args:
+          - "--insecure-no-tls"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: ssh
+          containerPort: 3023
+          protocol: TCP
+        - name: web-ssh
+          containerPort: 3080
+          protocol: TCP
+        - name: tunnel
+          containerPort: 3024
+          protocol: TCP
+        volumeMounts:
+          - name: teleport-proxy-config
+            mountPath: /etc/teleport
+            readOnly: true
+      volumes:
+        - name: teleport-proxy-config
+          configMap:
+            name: teleport-proxy-config

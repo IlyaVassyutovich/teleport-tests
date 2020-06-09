@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teleport-auth
+  namespace: vassyutovich
+spec:
+  selector:
+    matchLabels:
+      app: teleport-auth
+  template:
+    metadata:
+      labels:
+        app: teleport-auth
+    spec:
+      containers:
+      - name: teleport-auth
+        image: quay.io/gravitational/teleport:4.2.9
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3025
+          name: auth
+          protocol: TCP
+        volumeMounts:
+          - name: teleport-auth-config
+            mountPath: /etc/teleport
+            readOnly: true
+      volumes:
+        - name: teleport-auth-config
+          configMap:
+            name: teleport-auth-config

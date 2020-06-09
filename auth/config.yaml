@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: teleport-auth-config
+  namespace: vassyutovich
+data:
+  teleport.yaml: |
+    teleport:
+      nodename: auth
+      data_dir: /var/lib/teleport
+      connection_limits:
+        max_connections: 100
+        max_users: 50
+      log:
+        output: stdout
+        severity: DEBUG
+      advertise_ip: teleport-auth-vassyutovich.mindbox.ru
+    auth_service:
+      enabled: yes
+      cluster_name: teleport-vassyutovich
+      authentication:
+        type: local
+        second_factor: off
+      listen_addr: 0.0.0.0:3025
+      public_addr: teleport-auth-vassyutovich.mindbox.ru:443
+      tokens:
+        - "proxy,node:TeSt-t0ken"
+        - "auth:TeSt-t0ken"
+      session_recording: "node"
+      keep_alive_interval: 2m
+      keep_alive_count_max: 3
+    ssh_service:
+      enabled: false
+    proxy_service:
+      enabled: false
