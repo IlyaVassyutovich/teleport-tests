@@ -12,7 +12,7 @@ spec:
       priority: 40
       services:
         - name: teleport-auth
-          port: 3025
+          port: 443
   tls:
     options:
       name: bgrade-tls-options

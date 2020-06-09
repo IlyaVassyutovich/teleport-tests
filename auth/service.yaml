@@ -8,7 +8,7 @@ spec:
     app: teleport-auth
   ports:
     - name: auth
-      port: 3025
-      targetPort: 3025
+      port: 443
+      targetPort: 443
       protocol: TCP
   type: ClusterIP

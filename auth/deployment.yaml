@@ -20,7 +20,7 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 3025
+        - containerPort: 443
           name: auth
           protocol: TCP
         volumeMounts:

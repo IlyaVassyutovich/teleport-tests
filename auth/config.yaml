@@ -21,7 +21,7 @@ data:
       authentication:
         type: local
         second_factor: off
-      listen_addr: 0.0.0.0:3025
+      listen_addr: 0.0.0.0:443
       public_addr: teleport-auth-vassyutovich.mindbox.ru:443
       tokens:
         - "proxy,node:TeSt-t0ken"
